@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Coupon Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000; 
+    }
+
+    .auth-box {
+      background: #e53935; 
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(135, 206, 235, 0.8); 
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.6s ease-out;
+      color: white;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 20px;
+      color: white;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .auth-box label {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .auth-box input {
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .auth-box p {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #f1f1f1;
+      margin-top: 20px;
+    }
+
+    .auth-box a {
+      color: #87CEEB; 
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .auth-box a:hover {
+      color: #fff;
+    }
+
+    .btn-primary {
+      width: 100%;
+      justify-content: center;
+      background: #000; 
+      color: white;
+      border: 2px solid #87CEEB;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      background: #111;
+      box-shadow: 0 0 12px #87CEEB;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-box">
+    <h2>📝 Register</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="regUsername">Username</label>
+        <input type="text" id="regUsername" required placeholder="Choose a username">
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" required placeholder="Choose a password">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+      <p>Already have an account? <a href="login.html">Login here</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('regUsername').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+
+      if(users.find(u => u.username === username)) {
+        alert("⚠️ Username already exists!");
+        return;
+      }
+
+      users.push({ username, password });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      alert("✅ Registration successful! Please login.");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

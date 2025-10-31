@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon & Discount Space</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-tags"></i> Coupon & Discount Space</h1>
+            <p>Never miss a great deal again!</p>
+
+            <div class="user-bar">
+                <span id="userInfo">👋 Welcome, User</span>
+                <button onclick="logout()" class="btn btn-secondary btn-logout">Logout</button>
+            </div>
+        </header>
+
+
+        <div class="controls">
+            <button id="addCouponBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Coupon
+            </button>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search coupons..." class="search-input">
+
+                <label for="filterCategory" class="filter-label">
+                    Filter by Category:
+                    <select id="filterCategory" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="travel">Travel</option>
+                        <option value="home">Furniture</option>
+                        <option value="other">Other</option>
+                    </select>
+                </label>
+
+                <label for="filterStatus" class="filter-label">
+                    Filter by Status:
+                    <select id="filterStatus" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="expired">Expired</option>
+                        <option value="used">Used</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-tag"></i>
+                <div>
+                    <h3 id="totalCoupons">0</h3>
+                    <p>Total Coupons</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h3 id="activeCoupons">0</h3>
+                    <p>Active</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3 id="usedCoupons">0</h3>
+                    <p>Used</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <h3 id="expiredCoupons">0</h3>
+                    <p>Expired</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="couponsList" class="coupons-list">
+        </div>
+
+        <div id="noCoupons" class="no-coupons" style="display: none;">
+            <i class="fas fa-inbox"></i>
+            <h3>No coupons yet</h3>
+            <p>Add your first coupon to get started!</p>
+        </div>
+    </div>
+
+    <div id="couponModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Coupon</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="couponForm">
+                <div class="form-group">
+                    <label for="couponTitle">Coupon Title *</label>
+                    <input type="text" id="couponTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="couponCode">Coupon Code</label>
+                    <input type="text" id="couponCode" placeholder="e.g., SAVE20">
+                </div>
+                <div class="form-group">
+                    <label for="discountAmount">Discount Amount *</label>
+                    <input type="text" id="discountAmount" required placeholder="e.g., 20% off, $10 off">
+                </div>
+                <div class="form-group">
+                    <label for="storeName">Store/Website *</label>
+                    <input type="text" id="storeName" required placeholder="e.g., Amazon, Walmart">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="clothing">Clothing</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="travel">Travel</option>
+                        <option value="home">Furniture</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="date" id="expiryDate">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" rows="3" placeholder="Any additional notes..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="terms">Terms & Conditions</label>
+                    <textarea id="terms" rows="2" placeholder="Minimum purchase, restrictions..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Coupon</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <script>
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+        const currentUser = localStorage.getItem("currentUser");
+        if (currentUser) {
+            document.getElementById("userInfo").textContent = `👋 Welcome, ${currentUser}`;
+        }
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
+            window.location.href = "login.html";
+        }
+    </script>
+
+
+
+</body>
+
+</html>

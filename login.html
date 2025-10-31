@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Coupon Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000; /* black background */
+    }
+
+    .auth-box {
+      background: #e53935; /* red login box */
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(135, 206, 235, 0.8); /* sky-blue shadow */
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.6s ease-out;
+      color: white;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 20px;
+      color: white;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .auth-box label {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .auth-box input {
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .auth-box p {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #f1f1f1;
+      margin-top: 20px;
+    }
+
+    .auth-box a {
+      color: #87CEEB; /* sky blue link */
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .auth-box a:hover {
+      color: #fff;
+    }
+
+    .btn-primary {
+      width: 100%;
+      justify-content: center;
+      background: #000; /* black button */
+      color: white;
+      border: 2px solid #87CEEB;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      background: #111;
+      box-shadow: 0 0 12px #87CEEB;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-box">
+    <h2>🔐 Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" required placeholder="Enter username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Enter password">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+      <p>Don’t have an account? <a href="register.html">Register here</a></p>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if(user) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("currentUser", username);
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+
+    if(localStorage.getItem("isLoggedIn") === "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
